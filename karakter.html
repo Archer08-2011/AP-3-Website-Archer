@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batman - Karakter Favorit</title>
+    <style>
+        :root {
+            --batman-yellow: #F0E800;
+            --batman-black: #000000;
+            --batman-gray: #2D2D2D;
+            --batman-dark: #1A1A1A;
+            --batman-light: #424242;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            background: 
+                /* Dark overlay */
+                linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+                /* Batman background image */
+                url('https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            min-height: 100vh;
+        }
+        
+        /* Bat Symbol Nav Border */
+        nav {
+            background: linear-gradient(to right, var(--batman-black), var(--batman-gray));
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(240, 232, 0, 0.3);
+            position: relative;
+            border-bottom: 3px solid var(--batman-yellow);
+        }
+        
+        nav::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path fill="%23F0E800" d="M50 0 L100 50 L50 35 L0 50 Z"/></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        
+        nav a {
+            color: var(--batman-yellow);
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 8px 20px;
+            border-radius: 30px;
+            transition: all 0.3s;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--batman-yellow);
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        nav a:hover {
+            background-color: var(--batman-yellow);
+            color: var(--batman-black);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(240, 232, 0, 0.5);
+        }
+        
+        /* Bat Wing Container Border */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: rgba(45, 45, 45, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            border: 4px solid var(--batman-yellow);
+            backdrop-filter: blur(5px);
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, transparent 50%, rgba(240, 232, 0, 0.1) 51%, transparent 52%),
+                radial-gradient(circle at 80% 30%, transparent 50%, rgba(240, 232, 0, 0.1) 51%, transparent 52%);
+            background-size: 100% 100%;
+            pointer-events: none;
+        }
+        
+        h1 {
+            color: var(--batman-yellow);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 3em;
+            text-shadow: 3px 3px 0 var(--batman-black);
+            position: relative;
+            padding-bottom: 15px;
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 3px;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--batman-yellow), transparent);
+            border-radius: 2px;
+        }
+        
+        /* Bat Symbol Image Border */
+        .character-img-container {
+            width: 350px;
+            margin: 30px auto;
+            position: relative;
+            padding: 10px;
+            background: 
+                linear-gradient(45deg, var(--batman-black) 40%, transparent 41%),
+                linear-gradient(-45deg, var(--batman-black) 40%, transparent 41%),
+                linear-gradient(var(--batman-black), var(--batman-black));
+            background-size: 50% 50%, 50% 50%, 100% 100%;
+            background-position: top left, top right, center;
+            background-repeat: no-repeat;
+            transition: all 0.5s;
+        }
+        
+        .character-img {
+            display: block;
+            width: 100%;
+            border-radius: 5px;
+            border: 3px solid var(--batman-yellow);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: transform 0.5s;
+        }
+        
+        .character-img-container:hover {
+            transform: scale(1.05);
+            background: 
+                linear-gradient(45deg, var(--batman-yellow) 40%, transparent 41%),
+                linear-gradient(-45deg, var(--batman-yellow) 40%, transparent 41%),
+                linear-gradient(var(--batman-black), var(--batman-black));
+            background-size: 50% 50%, 50% 50%, 100% 100%;
+            background-position: top left, top right, center;
+            background-repeat: no-repeat;
+        }
+        
+        .character-img-container:hover .character-img {
+            transform: perspective(1000px) rotateY(10deg);
+            box-shadow: 0 10px 25px rgba(240, 232, 0, 0.3);
+        }
+        
+        /* Bat Bullet Points */
+        .character-info, .why-favorite {
+            margin-top: 30px;
+            line-height: 1.8;
+            padding: 25px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+            position: relative;
+            border-left: 5px solid var(--batman-yellow);
+        }
+        
+        .character-info::before, .why-favorite::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 60px;
+            height: 60px;
+            background-image: url('https://www.transparentpng.com/thumb/batman/batman-logo-transparent-background-12.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.1;
+        }
+        
+        .section-title {
+            color: var(--batman-yellow);
+            border-bottom: 2px dashed var(--batman-yellow);
+            padding-bottom: 5px;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .character-info ul, .why-favorite ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .character-info li, .why-favorite li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+        }
+        
+        .character-info li::before, .why-favorite li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 20px;
+            height: 20px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23F0E800" d="M50 0 L100 50 L50 100 L0 50 Z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        
+        /* Bat Signal Stats */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .stat-item {
+            background: var(--batman-black);
+            color: var(--batman-yellow);
+            padding: 20px 15px;
+            border-radius: 10px;
+            width: 22%;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: all 0.3s;
+            border: 2px solid var(--batman-yellow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-item::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(240,232,0,0.2) 0%, transparent 70%);
+            transform: rotate(30deg);
+            transition: all 0.5s;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(240, 232, 0, 0.3);
+            background: var(--batman-gray);
+        }
+        
+        .stat-item:hover::before {
+            animation: batSignal 1.5s;
+        }
+        
+        @keyframes batSignal {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+        
+        .stat-item h3 {
+            margin-top: 0;
+            font-size: 1.1em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-family: 'Arial Black', sans-serif;
+        }
+        
+        .stat-item p {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 0;
+            color: white;
+        }
+        
+        /* Bat Border Video */
+        .highlight-video {
+            margin: 50px 0;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            position: relative;
+            border: 2px solid transparent;
+        }
+        
+        .highlight-video::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, 
+                var(--batman-yellow), 
+                var(--batman-black), 
+                var(--batman-yellow), 
+                var(--batman-black));
+            background-size: 200% 200%;
+            border-radius: 17px;
+            animation: borderGradient 4s ease infinite;
+        }
+        
+        .highlight-video h2 {
+            color: var(--batman-yellow);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            font-family: 'Arial Black', sans-serif;
+        }
+        
+        .highlight-video h2::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--batman-yellow), var(--batman-black), var(--batman-yellow));
+            border-radius: 3px;
+        }
+        
+        .highlight-video iframe {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 5px solid var(--batman-black);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Profil Saya</a>
+        <a href="karakter.html">Batman</a>
+    </nav>
+    
+    <div class="container">
+        <h1>THE DARK KNIGHT</h1>
+        
+        <div class="character-img-container">
+            <img src="Batman_Vol_3_131_Textless_Fabok_Variant.webp" alt="Batman" class="character-img">
+        </div>
+        
+        <div class="character-info">
+            <h2 class="section-title">BIOGRAFI BATMAN</h2>
+            <ul>
+                <li><strong>Nama Asli:</strong> Bruce Wayne</li>
+                <li><strong>Pencipta:</strong> Bob Kane dan Bill Finger</li>
+                <li><strong>Penampilan Pertama:</strong> Detective Comics #27 (1939)</li>
+                <li><strong>Asal:</strong> Gotham City</li>
+                <li><strong>Kemampuan:</strong> Genius-level intellect, master detective, martial arts expert</li>
+                <li><strong>Perlengkapan:</strong> Batsuit, utility belt, Batmobile, berbagai gadget</li>
+                <li><strong>Sekutu:</strong> Alfred Pennyworth, Commissioner Gordon, Robin, Batgirl</li>
+                <li><strong>Musuh:</strong> Joker, Penguin, Riddler, Two-Face, Bane</li>
+            </ul>
+        </div>
+        
+        <div class="why-favorite">
+            <h2 class="section-title">MENGAPA BATMAN FAVORIT SAYA?</h2>
+            <ul>
+                <li><strong>Manusia Biasa:</strong> Tanpa kekuatan super, tapi melalui disiplin dan kecerdasan menjadi pahlawan</li>
+                <li><strong>Etos Kerja:</strong> Latihan bertahun-tahun menguasai berbagai ilmu</li>
+                <li><strong>Filosofi:</strong> "Kegagalan adalah kesempatan untuk belajar"</li>
+                <li><strong>Kompleksitas:</strong> Karakter gelap dengan moral code yang kuat</li>
+                <li><strong>Perjalanan:</strong> Dari trauma masa kecil menjadi pelindung Gotham</li>
+                <li><strong>Kecerdasan:</strong> Strategi dan taktik yang selalu beberapa langkah di depan</li>
+                <li><strong>Inspirasi:</strong> Mengajarkan kita bisa menjadi lebih dari batasan diri</li>
+            </ul>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <h3>PENAMPILAN PERTAMA</h3>
+                <p>1939</p>
+            </div>
+            <div class="stat-item">
+                <h3>PENCIPTA</h3>
+                <p>Bob Kane & Bill Finger</p>
+            </div>
+            <div class="stat-item">
+                <h3>KOTA</h3>
+                <p>Gotham</p>
+            </div>
+            <div class="stat-item">
+                <h3>ALTER EGO</h3>
+                <p>Bruce Wayne</p>
+            </div>
+        </div>
+        
+        <div class="highlight-video">
+            <h2>BATMAN BEST MOMENTS</h2>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/mqqft2x_Aa4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</body>
+</html>
